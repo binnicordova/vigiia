@@ -1,5 +1,5 @@
 import {StyleSheet} from "react-native";
-import {BORDER, RADIUS} from "@/theme/border";
+import {RADIUS} from "@/theme/border";
 import {FONT_FAMILY, FONT_SIZE} from "@/theme/fonts";
 import {SPACING} from "@/theme/spacing";
 
@@ -9,16 +9,23 @@ export const styles = StyleSheet.create({
         marginBottom: SPACING[4],
     },
     label: {
-        fontSize: FONT_SIZE[2],
+        fontSize: FONT_SIZE[4],
         fontFamily: FONT_FAMILY.LATO_BOLD,
         marginBottom: SPACING[2],
     },
+    inputWrapper: {
+        flexDirection: "row",
+        alignItems: "center",
+        height: 56,
+        borderWidth: 0,
+        borderRadius: RADIUS[3],
+        paddingHorizontal: SPACING[5],
+        gap: SPACING[3],
+    },
     input: {
-        height: 48,
-        borderWidth: BORDER[1],
-        borderRadius: RADIUS[2],
-        paddingHorizontal: SPACING[4],
-        fontSize: FONT_SIZE[2],
+        flex: 1,
+        height: "100%",
+        fontSize: FONT_SIZE[4],
         fontFamily: FONT_FAMILY.LATO_REGULAR,
     },
     errorInput: {

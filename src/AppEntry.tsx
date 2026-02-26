@@ -1,9 +1,11 @@
 import {initBackgroundFetch} from "./hooks/useBackgroundFetch";
 import {initNotification} from "./hooks/useNotification";
 import {initFetchUpdate} from "./hooks/useUpdates";
+import {initLocationService} from "./services/location";
 
 initBackgroundFetch();
 initNotification();
 initFetchUpdate();
+initLocationService();
 
 import "expo-router/entry";

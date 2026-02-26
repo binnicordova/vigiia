@@ -3,22 +3,31 @@ import {RADIUS} from "@/theme/border";
 import {FONT_FAMILY, FONT_SIZE} from "@/theme/fonts";
 import {SPACING} from "@/theme/spacing";
 
-const BUTTON_HEIGHT = 48;
+const BUTTON_HEIGHT = 56;
 
 export const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        paddingHorizontal: SPACING[9],
+        paddingHorizontal: SPACING[6],
         paddingVertical: SPACING[2],
-        alignSelf: "flex-start",
+        alignSelf: "stretch",
         borderRadius: RADIUS[5],
         height: BUTTON_HEIGHT,
         alignItems: "center",
         justifyContent: "center",
+        flexDirection: "row",
+        gap: SPACING[3],
+    },
+    outline: {
+        backgroundColor: "transparent",
+        borderWidth: 1,
     },
     text: {
-        fontSize: FONT_SIZE[2],
+        backgroundColor: "transparent",
+    },
+    label: {
+        fontSize: FONT_SIZE[4],
         fontFamily: FONT_FAMILY.LATO_BOLD,
+        textTransform: "uppercase",
     },
     disabled: {
         opacity: 0.5,

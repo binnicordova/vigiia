@@ -8,6 +8,7 @@ export type ThemedTextProps = TextProps & {
         | "default"
         | "title"
         | "subtitle"
+        | "heading"
         | "link"
         | "caption"
         | "error"
@@ -24,11 +25,12 @@ export function Text({style, type = "default", ...rest}: ThemedTextProps) {
                     color: text,
                     fontFamily: FONT_FAMILY.LATO_REGULAR,
                 },
-                type === "default" ? styles.default : undefined,
-                type === "title" ? styles.title : undefined,
-                type === "subtitle" ? styles.subtitle : undefined,
-                type === "link" ? styles.link : undefined,
-                type === "caption" ? styles.caption : undefined,
+                type === "default" && styles.default,
+                type === "title" && styles.title,
+                type === "subtitle" && styles.subtitle,
+                type === "heading" && styles.heading,
+                type === "link" && styles.link,
+                type === "caption" && styles.caption,
                 type === "error" && [styles.error, {color: error}],
                 type === "label" && styles.label,
                 style,

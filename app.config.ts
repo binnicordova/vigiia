@@ -2,27 +2,27 @@ import "dotenv/config";
 import type {ExpoConfig} from "@expo/config-types";
 
 const EAS_OWNER = process.env.EAS_OWNER; // by https://www.binnicordova.com
-const EAS_SLUG = "expo-boilerplate";
+const EAS_SLUG = "vigiia";
 const EAS_PROJECT_ID = process.env.EAS_PROJECT_ID;
 
-const VERSION = "0.0.6";
-const VERSION_CODE = 6;
+const VERSION = "0.0.1";
+const VERSION_CODE = 1;
 
 const APP_VARIANTS = {
     development: {
-        identifier: "com.expo.dev",
-        name: "Expo (Dev)",
-        scheme: "dev.expo.com",
+        identifier: "com.vigiia.dev",
+        name: "Vigiia (Dev)",
+        scheme: "dev.vigiia.com",
     },
     preview: {
-        identifier: "com.expo.preview",
-        name: "Expo (Preview)",
-        scheme: "preview.expo.com",
+        identifier: "com.vigiia.preview",
+        name: "Vigiia (Preview)",
+        scheme: "preview.vigiia.com",
     },
     production: {
-        identifier: "com.expo",
-        name: "Expo",
-        scheme: "expo.com",
+        identifier: "com.vigiia",
+        name: "Vigiia",
+        scheme: "vigiia.com",
     },
 };
 
@@ -65,6 +65,9 @@ export default ({config}: {config: ExpoConfig}): ExpoConfig => ({
             UIBackgroundModes: ["process"],
             ITSAppUsesNonExemptEncryption: false,
         },
+        config: {
+            googleMapsApiKey: process.env.EXPO_PUBLIC_MAPS_SECRET,
+        },
     },
     android: {
         adaptiveIcon: {
@@ -72,6 +75,11 @@ export default ({config}: {config: ExpoConfig}): ExpoConfig => ({
             backgroundColor: "#FFFFFF",
         },
         package: getUniqueIdentifier(),
+        config: {
+            googleMaps: {
+                apiKey: process.env.EXPO_PUBLIC_MAPS_SECRET,
+            },
+        },
     },
     web: {
         favicon: "./assets/favicon.png",

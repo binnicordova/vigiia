@@ -1,28 +1,30 @@
-![Expo React Native Boilerplate](./resources/expo-rn-boilerplate_bcordova.gif)
+![Vigiia](./resources/social-feature-graphic-atlas.png)
 
-# Expo Boilerplate v0.0.6 — Simple & Friendly by [binnicordova.com](https://binnicordova.com) [LinkedIn](https://www.linkedin.com/in/binnicordova)
+# 🛡️ Vigiia — AI route protection and real-time trip risk detection.
 
-Crafted by an Expo developer with over 8 years of experience, this is a short, easy-to-understand starter for building mobile apps with Expo + React Native. Version **v0.0.6** now includes built-in **AI Agent Skills** designed to accelerate development, control AI generation for higher quality output, and enforce clean code standards automatically. 
+Vigiia is built on one simple principle:
 
-**Who is this for?**
-- Product people and designers who want a quick overview.
-- Developers who need a ready-to-use project with AI-superpowers.
+**Predict → Monitor → Detect → Escalate.**
+
+When a trip starts, the system creates an expected travel model (route, time, speed, stop behavior).  
+From that moment, it continuously compares real-world movement against that model.
+
+If behavior stays within expected parameters → the trip remains secure.
+
+If anomalies appear (route deviation, unusual stop, signal loss, panic activation) → the system increases risk level and automatically escalates monitoring and response protocols.
+
+Even without connectivity, all events are securely recorded and synchronized once the signal returns.
+
+Vigiia doesn’t just record where you were.  
+It validates what should be happening — and reacts when it doesn’t.
 
 ## Quick start
 
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/binnicordova/expo-boilerplate.git
-cd expo-boilerplate_binnicordova
-```
-
-or, Use the --template to create a new Expo project:
-
-> **Note**: This will remove the AI Skills, prompts, and instruction files. I recommend using the `git clone` option instead if you want a fully configured project.
-
-```sh
-pnpx create-expo --template https://github.com/binnicordova/expo-boilerplate
+git clone https://github.com/binnicordova/vigiia.git
+cd vigiia
 ```
 
 2. Install dependencies:

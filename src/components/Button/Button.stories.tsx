@@ -19,3 +19,27 @@ export const Basic: Story = {
         onPress: action("onPress"),
     },
 };
+
+export const Outline: Story = {
+    args: {
+        title: "Outline Button",
+        variant: "outline",
+        onPress: action("onPress"),
+    },
+};
+
+export const TextVariant: Story = {
+    args: {
+        title: "Text Button",
+        variant: "text",
+        onPress: action("onPress"),
+    },
+};
+
+export const WithIcon: Story = {
+    args: {
+        title: "Button with Icon",
+        icon: "shield-outline",
+        onPress: action("onPress"),
+    },
+};
