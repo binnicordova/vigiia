@@ -1,19 +1,20 @@
 import {StyleSheet} from "react-native";
 import {RADIUS} from "@/theme/border";
-import {FONT_FAMILY, FONT_SIZE} from "@/theme/fonts";
 import {SPACING} from "@/theme/spacing";
 
 export const styles = StyleSheet.create({
     container: {
         padding: SPACING[6],
         borderRadius: RADIUS[5],
-        gap: SPACING[6],
+        gap: SPACING[2],
         alignItems: "center",
         width: "100%",
     },
     header: {
+        flexDirection: "row",
         alignItems: "center",
         gap: SPACING[3],
+        width: "100%",
     },
     shieldContainer: {
         width: 64,
@@ -22,29 +23,20 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    title: {
-        textAlign: "center",
-        lineHeight: 28,
-    },
-    description: {
-        textAlign: "center",
-        lineHeight: 22,
-        paddingHorizontal: SPACING[2],
+    headerContent: {
+        flex: 1,
+        justifyContent: "center",
     },
     safeButton: {
         width: "100%",
-        height: 64,
-        borderRadius: RADIUS[5],
     },
     footerActions: {
         flexDirection: "row",
-        gap: SPACING[4],
+        gap: SPACING[2],
         width: "100%",
     },
     secondaryButton: {
         flex: 1,
-        borderRadius: RADIUS[4],
-        height: 72,
     },
     panicButtonText: {},
 });

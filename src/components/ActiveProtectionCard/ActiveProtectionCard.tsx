@@ -9,17 +9,19 @@ import {Text} from "../Text/Text";
 import {styles} from "./ActiveProtectionCard.styles";
 
 export type ActiveProtectionCardProps = {
-    onCallPress?: () => void;
-    onPanicPress?: () => void;
+    onSafePress: () => void;
+    onCallPress: () => void;
+    onPanicPress: () => void;
     testID?: string;
 };
 
 export const ActiveProtectionCard = ({
+    onSafePress,
     onCallPress,
     onPanicPress,
     testID = "active-protection-card",
 }: ActiveProtectionCardProps) => {
-    const {background} = theme();
+    const {background, accent} = theme();
 
     return (
         <Card
@@ -30,17 +32,29 @@ export const ActiveProtectionCard = ({
                 <View style={styles.shieldContainer}>
                     <Icon
                         name="shield-alert"
-                        color="#ef4444"
-                        size={FONT_SIZE[12]}
+                        color={accent}
+                        size={FONT_SIZE[16]}
+                        style={{position: "absolute", top: 0, right: 0}}
                     />
                 </View>
-                <Text type="subtitle" style={styles.title}>
-                    {STRINGS.active_protection.title}
-                </Text>
-                <Text type="default" style={styles.description}>
-                    {STRINGS.active_protection.description}
-                </Text>
+
+                <View style={styles.headerContent}>
+                    <Text type="subtitle">
+                        {STRINGS.active_protection.title}
+                    </Text>
+                    <Text type="default">
+                        {STRINGS.active_protection.description}
+                    </Text>
+                </View>
             </View>
+
+            <Button
+                title={STRINGS.active_protection.safe_button}
+                icon="check-circle-outline"
+                onPress={onSafePress}
+                style={styles.safeButton}
+                testID={`${testID}-safe-button`}
+            />
 
             <View style={styles.footerActions}>
                 <Button

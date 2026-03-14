@@ -31,8 +31,4 @@ export const styles = StyleSheet.create({
         color: "#64748b",
         fontFamily: FONT_FAMILY.LATO_BOLD,
     },
-    destination: {
-        fontFamily: FONT_FAMILY.LATO_BOLD,
-        fontSize: FONT_SIZE[7],
-    },
 });

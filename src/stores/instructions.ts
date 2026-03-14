@@ -1,12 +1,8 @@
 import {atom} from "jotai";
 import type {IconName} from "@/components/Icon/Icon";
-import {
-    currentLocationAtom,
-    destainAtom,
-    routeStepsAtom,
-    type RouteStep,
-} from "@/stores/location";
+import {destainAtom, type RouteStep, routeStepsAtom} from "@/stores/route";
 import {calculateDistance} from "@/utils/measurements";
+import {currentLocationAtom} from "./location";
 
 export type DriverInstruction = {
     instruction: string;
@@ -131,18 +127,27 @@ const createDriverInstruction = (
     };
 };
 
+const baseDriverInstructionAtom = atom<DriverInstruction>({
+    instruction: "Continúa hacia",
+    label: "tu destino",
+    distance: 0,
+    iconName: "navigation-variant",
+});
+
 export const driverInstructionAtom = atom<DriverInstruction>((get) => {
     const currentLocation = get(currentLocationAtom);
     const destination = get(destainAtom);
     const steps = get(routeStepsAtom);
 
-    if (steps.length === 0) {
-        return {
-            instruction: "Continúa hacia",
-            label: destination.name || "tu destino",
-            distance: 0,
-            iconName: "navigation-variant",
-        };
+    if (steps.length === 0 || !currentLocation || !destination) {
+        return (
+            get(baseDriverInstructionAtom) || {
+                instruction: "Continúa hacia",
+                label: destination?.name || "tu destino",
+                distance: 0,
+                iconName: "navigation-variant",
+            }
+        );
     }
 
     let closestStepIndex = 0;

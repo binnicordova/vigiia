@@ -1,7 +1,7 @@
-import React from "react";
 import {render} from "@testing-library/react-native";
-import {Provider} from "jotai";
+import {type Atom, Provider} from "jotai";
 import {useHydrateAtoms} from "jotai/utils";
+import type React from "react";
 import {driverInstructionAtom} from "@/stores/instructions";
 import {DriverInstructionsCard} from "./DriverInstructionsCard";
 
@@ -12,10 +12,11 @@ const HydrateAtoms = ({
     atomValues,
     children,
 }: {
-    atomValues: any;
+    atomValues: Iterable<readonly [Atom<unknown>, unknown]>;
     children: React.ReactNode;
 }) => {
-    useHydrateAtoms(atomValues);
+    // biome-ignore lint/suspicious/noExplicitAny: hydration types are complex
+    useHydrateAtoms(atomValues as any);
     return children;
 };
 

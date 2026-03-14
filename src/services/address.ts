@@ -1,5 +1,5 @@
-import type {Coordinate} from "@/stores/location";
 import {http} from "@/services/http";
+import type {Coordinate} from "@/stores/location";
 import {getCurrentLanguage} from "@/utils/localization";
 
 type NominatimAddressResponse = {
@@ -68,14 +68,19 @@ export async function searchAddresses(
 export async function getLocationDetail(
     coordinate: Coordinate
 ): Promise<string> {
-    const {latitude, longitude} = coordinate;
-    const url = `${NOMINATIM_REVERSE_URL}?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+    try {
+        const {latitude, longitude} = coordinate;
+        const url = `${NOMINATIM_REVERSE_URL}?format=jsonv2&lat=${latitude}&lon=${longitude}`;
 
-    const languageCode = getCurrentLanguage();
+        const languageCode = getCurrentLanguage();
 
-    const data = await http.get<{display_name?: string}>(url, {
-        "Accept-Language": languageCode,
-    });
+        const data = await http.get<{display_name?: string}>(url, {
+            "Accept-Language": languageCode,
+        });
 
-    return data.display_name ?? "";
+        return data.display_name ?? "";
+    } catch (error) {
+        console.warn("Failed to fetch location detail", error);
+        return `${coordinate.latitude.toFixed(5)}, ${coordinate.longitude.toFixed(5)}`;
+    }
 }

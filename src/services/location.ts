@@ -1,8 +1,8 @@
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import {Platform} from "react-native";
-import {currentLocationAtom} from "@/stores/location";
 import {defaultStore} from "@/app/_layout";
+import {currentLocationAtom} from "@/stores/location";
 
 const LOCATION_TASK_NAME = "app-location-tracking";
 const DEFAULT_DISTANCE_INTERVAL = 10 * 4; // 40 meters

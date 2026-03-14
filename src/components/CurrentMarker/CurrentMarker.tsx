@@ -1,10 +1,10 @@
+import {View} from "react-native";
 import {Circle, Marker} from "react-native-maps";
 import {STRINGS} from "@/constants/strings";
 import type {Coordinate} from "@/stores/location";
-import {View} from "react-native";
 import {theme} from "@/theme/colors";
-import {styles} from "./CurrentMarker.styles";
 import {Arrow} from "../Svg/Arrow";
+import {styles} from "./CurrentMarker.styles";
 
 type CurrentMarkerProps = {
     currentLocation: Coordinate;

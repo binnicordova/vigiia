@@ -1,5 +1,5 @@
-import type {Coordinate} from "@/stores/location";
 import {http} from "@/services/http";
+import type {Coordinate} from "@/stores/location";
 
 type OsrmRouteResponse = {
     code?: string;

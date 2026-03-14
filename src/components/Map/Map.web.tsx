@@ -1,7 +1,7 @@
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, type ViewProps} from "react-native";
 import {Text} from "@/components/Text/Text";
 
-export type MapProps = any;
+export type MapProps = ViewProps;
 
 export const Map = ({style, ...props}: MapProps) => {
     return (

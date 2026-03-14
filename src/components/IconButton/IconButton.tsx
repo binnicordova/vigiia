@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import {
     type GestureResponderEvent,
     TouchableOpacity,
@@ -6,9 +6,9 @@ import {
 } from "react-native";
 import {theme} from "@/theme/colors";
 import {FONT_SIZE} from "@/theme/fonts";
+import {OPACITY} from "@/theme/opcacity";
 import {Icon, type IconProps} from "../Icon/Icon";
 import {styles} from "./IconButton.styles";
-import {OPACITY} from "@/theme/opcacity";
 
 const COLORS = theme();
 
