@@ -1,0 +1,222 @@
+[
+    {
+        "name": "Transporte y Logística CARGO Perú S.A.C.",
+        "type": "Cargo & Freight Transport",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "Av. La Marina 3420, San Miguel, Lima",
+        "city": "Lima",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Novotrans Logistica y Carga SAC",
+        "type": "Freight & Logistics",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "Calle Carolina Freyre 149, Urb. Pando IV Etapa, San Miguel",
+        "city": "Lima",
+        "phones": ["+51 56 322 57"],
+        "email": "jaguilar@novotransperu.com"
+    },
+    {
+        "name": "Grupo Cargo Business",
+        "type": "Freight & Logistics",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "Av. Javier Prado Oeste 757, Magdalena del Mar",
+        "city": "Lima",
+        "phones": ["+51 1 715 6854"],
+        "email": "ventas@cargobusiness.com.pe"
+    },
+    {
+        "name": "DHL Peru",
+        "type": "International Logistics",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "DSV Peru",
+        "type": "Freight & Logistics",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "CEVA Logistics Peru",
+        "type": "Freight & Logistics",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Kuehne + Nagel Peru",
+        "type": "Logistics & Freight",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Savar Corporación Logística",
+        "type": "Cargo Transport",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transaltisa",
+        "type": "Freight & Transport",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Peru Logística SAC",
+        "type": "Cargo Transport",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transportes Campos S.A.C.",
+        "type": "Transport Service",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transkol Express",
+        "type": "Cargo Transport",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transportes Exaltacion Condor LLana e Hijos",
+        "type": "Transport Service",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transporte y Servicios Virgo S.A.C.",
+        "type": "Transport Service",
+        "location": "La Libertad, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Trujillo",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transportes Global Cargo S.A.C.",
+        "type": "Cargo Transport",
+        "location": "La Libertad, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Trujillo",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transportes Ruiz e Hijos S.A.C.",
+        "type": "Transport Service",
+        "location": "La Libertad, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Trujillo",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transporte Vasquez S.A.C.",
+        "type": "Transport Service",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transportes Luchin E.I.R.L.",
+        "type": "Transport Service",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "Transportes Lobito E.I.R.L.",
+        "type": "Transport Service",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": [],
+        "email": ""
+    },
+    {
+        "name": "LBC Transport SAC",
+        "type": "Cargo & Delivery",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": [],
+        "email": ""
+    }
+]

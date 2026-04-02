@@ -24,3 +24,7 @@ coverage/
 .env
 .env.local
 *.env
+
+#scripts
+.wwebjs_auth
+.wwebjs_cache

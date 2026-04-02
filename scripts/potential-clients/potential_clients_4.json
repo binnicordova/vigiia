@@ -1,0 +1,57 @@
+[
+    {
+        "name": "Transportes Pepe",
+        "type": "Transport & Cargo",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": ["+51 980 966 176"],
+        "email": ""
+    },
+    {
+        "name": "Perú Vans (Grupo OMR WORK GROUP)",
+        "type": "Passenger Transport / Shuttle",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": ["+51 955 544 485"],
+        "email": ""
+    },
+    {
+        "name": "Transporte Plastimar",
+        "type": "Cargo & Freight Transport",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": ["+51 920 610 632", "+51 913 984 629"],
+        "email": ""
+    },
+    {
+        "name": "TRANSPORTES MARIÑO EXPRESS",
+        "type": "Cargo & Logistics",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["(contact via WhatsApp group, number varies)"],
+        "email": ""
+    },
+    {
+        "name": "Peru Andes Travel (Transfers & Transport)",
+        "type": "Transport & Transfers",
+        "location": "Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "",
+        "phones": [],
+        "email": ""
+    }
+]
