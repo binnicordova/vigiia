@@ -1,6 +1,7 @@
 import {atom} from "jotai";
 import {atomWithStorage} from "jotai/utils";
 import {defaultStore} from "@/app/_layout";
+import {getToken} from "@/hooks/useNotification";
 import {
     finishRoute,
     publishRoute,
@@ -13,6 +14,7 @@ import {
     formatDistance,
     formatDuration,
 } from "@/utils/measurements";
+import {storage} from "@/utils/storage";
 import {type Coordinate, currentLocationAtom} from "./location";
 import {uuidAtom} from "./user";
 
@@ -44,23 +46,62 @@ export type RouteStep = {
 
 export const routePinAtom = atomWithStorage<string | undefined>(
     "routePin",
-    undefined
+    undefined,
+    storage,
+    {getOnInit: true}
 );
 
-export const coordinatesAtom = atom<Coordinate[]>([]);
-export const waypointsAtom = atom<RouteWaypoint[]>([]);
-export const legsAtom = atom<RouteLeg[]>([]);
-export const routeStepsAtom = atom<RouteStep[]>([]);
-export const routeDistanceAtom = atom<number>(0);
-export const routeDurationAtom = atom<number>(0);
+export const coordinatesAtom = atomWithStorage<Coordinate[]>(
+    "coordinates",
+    [],
+    storage,
+    {getOnInit: true}
+);
+export const waypointsAtom = atomWithStorage<RouteWaypoint[]>(
+    "waypoints",
+    [],
+    storage,
+    {getOnInit: true}
+);
+export const legsAtom = atomWithStorage<RouteLeg[]>("legs", [], storage, {
+    getOnInit: true,
+});
+export const routeStepsAtom = atomWithStorage<RouteStep[]>(
+    "route-steps",
+    [],
+    storage,
+    {getOnInit: true}
+);
+export const routeDistanceAtom = atomWithStorage<number>(
+    "route-distance",
+    0,
+    storage,
+    {getOnInit: true}
+);
+export const routeDurationAtom = atomWithStorage<number>(
+    "route-duration",
+    0,
+    storage,
+    {getOnInit: true}
+);
 
-export const originAtom = atom<Coordinate | undefined>(undefined);
-export const destainAtom = atom<Coordinate | undefined>(undefined);
+export const originAtom = atomWithStorage<Coordinate | undefined>(
+    "origin",
+    undefined,
+    storage,
+    {getOnInit: true}
+);
+export const destainAtom = atomWithStorage<Coordinate | undefined>(
+    "destain",
+    undefined,
+    storage,
+    {getOnInit: true}
+);
 
 const NEAR_ORIGIN_THRESHOLD = 200;
-export const isNearOriginAtom = atom((get) => {
+export const isNearOriginAtom = atom(async (get) => {
     const currentLocation = get(currentLocationAtom);
-    const origin = get(originAtom);
+    const origin = await get(originAtom);
 
     if (!currentLocation || !origin) {
         return false;
@@ -77,9 +118,9 @@ export const isNearOriginAtom = atom((get) => {
 });
 
 const NEAR_DESTAIN_THRESHOLD = 200;
-export const isNearDestainAtom = atom((get) => {
+export const isNearDestainAtom = atom(async (get) => {
     const currentLocation = get(currentLocationAtom);
-    const destain = get(destainAtom);
+    const destain = await get(destainAtom);
 
     if (!currentLocation || !destain) {
         return false;
@@ -95,19 +136,19 @@ export const isNearDestainAtom = atom((get) => {
     return distance <= NEAR_DESTAIN_THRESHOLD;
 });
 
-export const formattedDistanceAtom = atom((get) => {
-    const distance = get(routeDistanceAtom);
+export const formattedDistanceAtom = atom(async (get) => {
+    const distance = await get(routeDistanceAtom);
     return formatDistance(distance);
 });
 
-export const formattedDurationAtom = atom((get) => {
-    const duration = get(routeDurationAtom);
+export const formattedDurationAtom = atom(async (get) => {
+    const duration = await get(routeDurationAtom);
     return formatDuration(duration);
 });
 
 export const fetchRouteAtom = atom(null, async (get, set, pin: string) => {
-    const origin = get(originAtom);
-    const destain = get(destainAtom);
+    const origin = await get(originAtom);
+    const destain = await get(destainAtom);
 
     if (!origin || !destain)
         throw new Error("Origin and destain must be defined to fetch route");
@@ -139,6 +180,8 @@ export const fetchRouteAtom = atom(null, async (get, set, pin: string) => {
     const uuid = await get(uuidAtom);
     if (!uuid) return;
 
+    const token = await getToken();
+
     publishRoute({
         uuid,
         coordinates: route.coordinates,
@@ -147,6 +190,7 @@ export const fetchRouteAtom = atom(null, async (get, set, pin: string) => {
         coordinate: get(currentLocationAtom) as Coordinate,
         currentTime: Date.now(),
         pin: pin,
+        token,
     });
 });
 
@@ -159,10 +203,12 @@ export const resetRouteAtom = atom(null, async (get, set, pin: string) => {
 
     const uuid = await get(uuidAtom);
     if (uuid) {
+        const token = await getToken();
         await finishRoute({
             uuid,
             coordinate: get(currentLocationAtom) as Coordinate,
             pin,
+            token,
         });
     }
 
@@ -195,6 +241,7 @@ export const imSafe = async (pin: string) => {
     if (!currentLocation) return;
 
     const storedPin = await defaultStore.get(routePinAtom);
+    console.log("Sending safe with pin:", pin, "Stored pin:", storedPin);
     if (pin !== storedPin) {
         throw new Error("Invalid PIN");
     }

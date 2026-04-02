@@ -23,6 +23,7 @@ export const publishRoute = (data: {
     coordinate: Coordinate;
     currentTime: number;
     pin: string;
+    token: string;
 }) => {
     console.log(TAG, "Publishing route with data:", data);
     return fetch(PUBLISH_ROUTE_SERVICE_URL, {
@@ -39,7 +40,6 @@ export const updateLocation = (data: {
     coordinate: Coordinate;
     isAlert?: boolean;
 }) => {
-    console.log(TAG, "Updating location with data:", data);
     const plateDocRef = doc(db, FIRESTORE_COLLECTION_NAME, data.uuid);
     const document = {
         ...data,
@@ -78,6 +78,7 @@ export const finishRoute = async (data: {
     uuid: string;
     coordinate: Coordinate;
     pin: string;
+    token: string;
 }): Promise<boolean> => {
     console.log(TAG, "Finishing route with data:", data);
     const response = await fetch(FINISH_ROUTE_SERVICE_URL, {

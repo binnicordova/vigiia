@@ -4,6 +4,7 @@ type StorageIdType = {
     favoritesLastUpdated: string;
     notificationToken: string;
     articles: string;
+    travelState: string;
 };
 
 export const STORAGE_ID: StorageIdType = {
@@ -12,4 +13,5 @@ export const STORAGE_ID: StorageIdType = {
     favoritesLastUpdated: "favoritesLastUpdated",
     notificationToken: "notificationToken",
     articles: "articles",
+    travelState: "travelState",
 };

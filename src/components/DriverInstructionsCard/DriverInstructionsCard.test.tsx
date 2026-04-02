@@ -1,26 +1,28 @@
 import {render} from "@testing-library/react-native";
-import {type Atom, Provider} from "jotai";
-import {useHydrateAtoms} from "jotai/utils";
-import type React from "react";
-import {driverInstructionAtom} from "@/stores/instructions";
+import {Provider} from "jotai";
 import {DriverInstructionsCard} from "./DriverInstructionsCard";
 
-/**
- * Helper component to hydrate atoms for testing
- */
-const HydrateAtoms = ({
-    atomValues,
-    children,
-}: {
-    atomValues: Iterable<readonly [Atom<unknown>, unknown]>;
-    children: React.ReactNode;
-}) => {
-    // biome-ignore lint/suspicious/noExplicitAny: hydration types are complex
-    useHydrateAtoms(atomValues as any);
-    return children;
-};
+jest.mock("jotai", () => {
+    const originalJotai = jest.requireActual("jotai");
+    return {
+        ...originalJotai,
+        useAtomValue: jest.fn(),
+    };
+});
+
+import {useAtomValue} from "jotai";
 
 describe("DriverInstructionsCard", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        (useAtomValue as jest.Mock).mockReturnValue({
+            instruction: "Continúa hacia",
+            label: "tu destino",
+            distance: 0,
+            iconName: "navigation-variant",
+        });
+    });
+
     it("renders with default instruction values", () => {
         const {getByText} = render(
             <Provider>
@@ -29,7 +31,7 @@ describe("DriverInstructionsCard", () => {
         );
 
         // Checking for some parts of the default state defined in the atom
-        expect(getByText(/hacia/i)).toBeTruthy();
+        expect(getByText(/tu destino/i)).toBeTruthy();
     });
 
     it("renders specific instructions when atom is hydrated", () => {
@@ -40,13 +42,11 @@ describe("DriverInstructionsCard", () => {
             iconName: "arrow-right",
         };
 
+        (useAtomValue as jest.Mock).mockReturnValue(mockInstruction);
+
         const {getByText} = render(
             <Provider>
-                <HydrateAtoms
-                    atomValues={[[driverInstructionAtom, mockInstruction]]}
-                >
-                    <DriverInstructionsCard />
-                </HydrateAtoms>
+                <DriverInstructionsCard />
             </Provider>
         );
 
@@ -62,13 +62,11 @@ describe("DriverInstructionsCard", () => {
             iconName: "check",
         };
 
+        (useAtomValue as jest.Mock).mockReturnValue(mockInstruction);
+
         const {getByText} = render(
             <Provider>
-                <HydrateAtoms
-                    atomValues={[[driverInstructionAtom, mockInstruction]]}
-                >
-                    <DriverInstructionsCard />
-                </HydrateAtoms>
+                <DriverInstructionsCard />
             </Provider>
         );
 

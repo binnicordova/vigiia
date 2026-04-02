@@ -208,7 +208,7 @@ body {
 
 /* Leaflet Overrides */
 .leaflet-container {
-    background: var(--dark) !important;
+    background: var(--dark);
 }
 .leaflet-popup-content-wrapper {
     background: var(--surface);
@@ -232,7 +232,7 @@ body {
 
 .vehicle-marker:hover,
 .vehicle-marker.hovered {
-    transform: scale(1.5) !important;
+    transform: scale(1.5);
     z-index: 1000;
 }
 

@@ -336,7 +336,7 @@ class RouteMonitorApp {
             );
     }
 
-    async handleStateChange(action, {uuid, data}, listEl, statusEl) {
+    async handleStateChange(action, {uuid, data}, listEl, _statusEl) {
         switch (action) {
             case "ADDED":
                 await this.renderRoute(uuid, data, listEl);

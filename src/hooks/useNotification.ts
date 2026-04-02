@@ -27,6 +27,18 @@ const handleNotificationConfig = {
     shouldShowList: true,
 };
 
+export const getToken = async (): Promise<string> => {
+    const projectId =
+        Constants?.expoConfig?.extra?.eas?.projectId ??
+        Constants?.easConfig?.projectId;
+    const token = (
+        await Notifications.getExpoPushTokenAsync({
+            projectId,
+        })
+    ).data;
+    return token;
+};
+
 export const initNotification = () => {
     const registerForPushNotificationsAsync = async () => {
         if (Platform.OS === "android") {
@@ -45,18 +57,6 @@ export const initNotification = () => {
         }
 
         return finalStatus;
-    };
-
-    const getToken = async (): Promise<string> => {
-        const projectId =
-            Constants?.expoConfig?.extra?.eas?.projectId ??
-            Constants?.easConfig?.projectId;
-        const token = (
-            await Notifications.getExpoPushTokenAsync({
-                projectId,
-            })
-        ).data;
-        return token;
     };
 
     registerForPushNotificationsAsync()

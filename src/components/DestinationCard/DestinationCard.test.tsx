@@ -3,8 +3,8 @@ import {DestinationCard} from "./DestinationCard";
 
 describe("DestinationCard Component", () => {
     it("renders correctly with default props", () => {
-        const {getByText} = render(<DestinationCard />);
-        expect(getByText("¿A dónde vas?")).toBeTruthy();
+        const {getByPlaceholderText, getByText} = render(<DestinationCard />);
+        expect(getByPlaceholderText("¿A dónde vas?")).toBeTruthy();
         expect(getByText("RESGUARDAME")).toBeTruthy();
     });
 

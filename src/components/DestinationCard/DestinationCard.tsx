@@ -53,8 +53,9 @@ export const DestinationCard = ({
         }
 
         const fetchDetails = async () => {
-            if (!debouncedDestain)
-                throw new Error("No destination coordinate provided");
+            if (!debouncedDestain) {
+                return;
+            }
             try {
                 const label = await getLocationDetail(debouncedDestain);
                 if (label && label !== query) {

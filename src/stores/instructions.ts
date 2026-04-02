@@ -1,7 +1,9 @@
 import {atom} from "jotai";
+import {atomWithStorage} from "jotai/utils";
 import type {IconName} from "@/components/Icon/Icon";
 import {destainAtom, type RouteStep, routeStepsAtom} from "@/stores/route";
 import {calculateDistance} from "@/utils/measurements";
+import {storage} from "@/utils/storage";
 import {currentLocationAtom} from "./location";
 
 export type DriverInstruction = {
@@ -127,21 +129,28 @@ const createDriverInstruction = (
     };
 };
 
-const baseDriverInstructionAtom = atom<DriverInstruction>({
-    instruction: "Continúa hacia",
-    label: "tu destino",
-    distance: 0,
-    iconName: "navigation-variant",
-});
+const baseDriverInstructionAtom = atomWithStorage<DriverInstruction>(
+    "base-driver-instruction",
+    {
+        instruction: "Continúa hacia",
+        label: "tu destino",
+        distance: 0,
+        iconName: "navigation-variant",
+    },
+    storage,
+    {
+        getOnInit: true,
+    }
+);
 
-export const driverInstructionAtom = atom<DriverInstruction>((get) => {
-    const currentLocation = get(currentLocationAtom);
-    const destination = get(destainAtom);
-    const steps = get(routeStepsAtom);
+export const driverInstructionAtom = atom(async (get) => {
+    const currentLocation = await get(currentLocationAtom);
+    const destination = await get(destainAtom);
+    const steps = await get(routeStepsAtom);
 
     if (steps.length === 0 || !currentLocation || !destination) {
         return (
-            get(baseDriverInstructionAtom) || {
+            (await get(baseDriverInstructionAtom)) || {
                 instruction: "Continúa hacia",
                 label: destination?.name || "tu destino",
                 distance: 0,

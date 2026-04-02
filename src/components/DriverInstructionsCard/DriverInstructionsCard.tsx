@@ -41,6 +41,10 @@ export const DriverInstructionsCard = ({
         );
     }
 
+    if (!driverInstruction) {
+        return null;
+    }
+
     const instruction = driverInstruction.instruction;
     const instructionLabel = driverInstruction.label;
     const iconName: IconName = driverInstruction.iconName;

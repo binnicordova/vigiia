@@ -132,11 +132,11 @@ export default function Index() {
     }, [coordinates, currentLocation, destination]);
 
     useEffect(() => {
-        if (destination && !firstCameraMove) {
-            moveToLocation(destination.latitude, destination.longitude);
+        if (travelState === "idle" && currentLocation && !firstCameraMove) {
+            moveToLocation(currentLocation.latitude, currentLocation.longitude);
             setFirstCameraMove(true);
         }
-    }, [destination, moveToLocation, firstCameraMove]);
+    }, [travelState, currentLocation, moveToLocation, firstCameraMove]);
 
     useEffect(() => {
         if (!currentLocation || travelState === "idle") {
@@ -224,7 +224,8 @@ export default function Index() {
                     await fetchRoute(pin);
                     setTravelState("on-road");
                     setPinModal((prev) => ({...prev, visible: false}));
-                } catch {
+                } catch (e) {
+                    console.error(TAG, "Error fetching route:", e);
                     Alert.alert(
                         "Error",
                         "No se pudo obtener la ruta. ¿Deseas intentarlo de nuevo?",
@@ -253,9 +254,14 @@ export default function Index() {
                     );
                     return;
                 }
-                await resetRoute(pin);
-                setTravelState("idle");
-                setPinModal((prev) => ({...prev, visible: false}));
+                try {
+                    await resetRoute(pin);
+                    setTravelState("idle");
+                    setPinModal((prev) => ({...prev, visible: false}));
+                } catch (e) {
+                    console.error(TAG, "Error resetting route:", e);
+                    Alert.alert("Error", "No se pudo cancelar el viaje.");
+                }
             },
         });
     };
@@ -275,8 +281,20 @@ export default function Index() {
                     );
                     return;
                 }
-                imSafe(pin);
-                setPinModal((prev) => ({...prev, visible: false}));
+                try {
+                    await imSafe(pin);
+                    setPinModal((prev) => ({...prev, visible: false}));
+                    Alert.alert(
+                        "Confirmado",
+                        "Gracias por confirmar que estás seguro. El monitoreo continúa normalmente."
+                    );
+                } catch (e) {
+                    console.error(TAG, "Error in imSafe:", e);
+                    Alert.alert(
+                        "Error",
+                        "PIN inválido o error de conexión. Por favor intenta de nuevo."
+                    );
+                }
             },
         });
     };
@@ -296,15 +314,21 @@ export default function Index() {
                     );
                     return;
                 }
-                await resetRoute(pin);
-                setTravelState("idle");
-                setPinModal((prev) => ({...prev, visible: false}));
+                try {
+                    await resetRoute(pin);
+                    setTravelState("idle");
+                    setPinModal((prev) => ({...prev, visible: false}));
+                } catch (e) {
+                    console.error(TAG, "Error finishing route:", e);
+                    Alert.alert("Error", "No se pudo finalizar el viaje.");
+                }
             },
         });
     };
 
     const handleRegionChange = (newRegion: typeof DEFAULT_LOCATION) => {
         setRegion(newRegion);
+        // console.log("Region changed to:", newRegion, "Current travel state:", travelState);
         if (travelState === "idle") {
             setDestination({
                 latitude: newRegion.latitude,
@@ -329,18 +353,6 @@ export default function Index() {
                 pitchEnabled
                 showsBuildings
             >
-                {!currentLocation && (
-                    <View
-                        style={{
-                            ...StyleSheet.absoluteFillObject,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            backgroundColor: "rgba(255, 255, 255, 0.8)",
-                        }}
-                    >
-                        <Text>Cargando ubicación...</Text>
-                    </View>
-                )}
                 {currentLocation && travelState !== "idle" && (
                     <CurrentMarker currentLocation={currentLocation} />
                 )}
@@ -387,6 +399,19 @@ export default function Index() {
                         />
                     )}
             </MapComponent>
+
+            {!currentLocation && (
+                <View
+                    style={{
+                        ...StyleSheet.absoluteFillObject,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "rgba(255, 255, 255, 0.8)",
+                    }}
+                >
+                    <Text>Cargando ubicación...</Text>
+                </View>
+            )}
 
             {travelState === "idle" && (
                 <IconButton

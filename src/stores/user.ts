@@ -2,10 +2,15 @@ import {atom} from "jotai";
 import {atomWithStorage} from "jotai/utils";
 import uuid from "react-native-uuid";
 import {defaultStore} from "@/app/_layout";
+import {storage} from "@/utils/storage";
 
 const uuidAtomWithStorage = atomWithStorage<string | undefined>(
     "user-uuid",
-    undefined
+    undefined,
+    storage,
+    {
+        getOnInit: true,
+    }
 );
 
 export const uuidAtom = atom(

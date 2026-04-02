@@ -1,6 +1,13 @@
 import {fireEvent, render} from "@testing-library/react-native";
 import {useAtomValue} from "jotai";
 import {STRINGS} from "@/constants/strings";
+import {
+    destainAtom,
+    formattedDistanceAtom,
+    formattedDurationAtom,
+    isNearDestainAtom,
+    isNearOriginAtom,
+} from "@/stores/route";
 import {TravelCard} from "./TravelCard";
 
 jest.mock("jotai", () => ({
@@ -11,14 +18,11 @@ describe("TravelCard", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         (useAtomValue as jest.Mock).mockImplementation((atom) => {
-            if (atom.toString().includes("isNearOriginAtom")) return false;
-            if (atom.toString().includes("isNearDestainAtom")) return false;
-            if (atom.toString().includes("destainAtom"))
-                return {name: "Test Destination"};
-            if (atom.toString().includes("formattedDistanceAtom"))
-                return "10 km";
-            if (atom.toString().includes("formattedDurationAtom"))
-                return "15 min";
+            if (atom === isNearOriginAtom) return false;
+            if (atom === isNearDestainAtom) return false;
+            if (atom === destainAtom) return {name: "Test Destination"};
+            if (atom === formattedDistanceAtom) return "10 km";
+            if (atom === formattedDurationAtom) return "15 min";
             return null;
         });
     });
@@ -28,35 +32,31 @@ describe("TravelCard", () => {
         expect(getByText(STRINGS.travel_card.title)).toBeTruthy();
     });
 
-    it("renders details and safe button when on origin", () => {
+    it("renders details and cancel button when on origin", () => {
         (useAtomValue as jest.Mock).mockImplementation((atom) => {
-            const atomStr = atom.toString();
-            if (atomStr.includes("isNearOriginAtom")) return true;
-            if (atomStr.includes("isNearDestainAtom")) return false;
-            if (atomStr.includes("destainAtom"))
-                return {name: "Test Destination"};
-            if (atomStr.includes("formattedDistanceAtom")) return "10 km";
-            if (atomStr.includes("formattedDurationAtom")) return "15 min";
+            if (atom === isNearOriginAtom) return true;
+            if (atom === isNearDestainAtom) return false;
+            if (atom === destainAtom) return {name: "Test Destination"};
+            if (atom === formattedDistanceAtom) return "10 km";
+            if (atom === formattedDurationAtom) return "15 min";
             return null;
         });
 
-        const onSafePress = jest.fn();
-        const {getByText} = render(<TravelCard onFinishPress={onSafePress} />);
+        const onCancel = jest.fn();
+        const {getByText} = render(<TravelCard onCancel={onCancel} />);
 
         expect(getByText("Test Destination")).toBeTruthy();
-        expect(getByText(STRINGS.active_protection.safe_button)).toBeTruthy();
+        expect(getByText(STRINGS.travel_card.cancel_button)).toBeTruthy();
 
-        fireEvent.press(getByText(STRINGS.active_protection.safe_button));
-        expect(onSafePress).toHaveBeenCalled();
+        fireEvent(getByText(STRINGS.travel_card.cancel_button), "onLongPress");
+        expect(onCancel).toHaveBeenCalled();
     });
 
     it("renders finish button when on destination", () => {
         (useAtomValue as jest.Mock).mockImplementation((atom) => {
-            const atomStr = atom.toString();
-            if (atomStr.includes("isNearOriginAtom")) return false;
-            if (atomStr.includes("isNearDestainAtom")) return true;
-            if (atomStr.includes("destainAtom"))
-                return {name: "Test Destination"};
+            if (atom === isNearOriginAtom) return false;
+            if (atom === isNearDestainAtom) return true;
+            if (atom === destainAtom) return {name: "Test Destination"};
             return null;
         });
 

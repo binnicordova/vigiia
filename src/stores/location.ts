@@ -22,26 +22,29 @@ export const currentAtom = atom<Coordinate | undefined>(undefined);
 export const currentLocationAtom = atom(
     (get) => get(currentAtom),
     async (get, set, newLocation: Coordinate) => {
-        console.log("Updating currentLocationAtom", newLocation);
         set(currentAtom, newLocation);
 
-        const travelState = get(travelStateAtom);
-        const origin = get(originAtom);
-        const destain = get(destainAtom);
+        const travelState = await get(travelStateAtom);
+        const origin = await get(originAtom);
+        const destain = await get(destainAtom);
 
-        travelState === "idle" && set(originAtom, newLocation);
-        if (travelState === "idle" && destain === undefined) {
-            console.log(
-                "Setting destain to current location in idle state",
-                newLocation
-            );
-            set(destainAtom, newLocation);
+        if (travelState === "idle") {
+            console.log("Setting origin to current location:", newLocation);
+            set(originAtom, newLocation);
+            if (!destain) {
+                console.log(
+                    "Setting destain to current location in idle state:",
+                    newLocation
+                );
+                set(destainAtom, newLocation);
+            }
         }
 
         if (travelState === "idle" || !origin || !destain) {
             return;
         }
-        const routeCoordinates = get(coordinatesAtom);
+
+        const routeCoordinates = await get(coordinatesAtom);
         const routeLine = [origin, ...routeCoordinates, destain];
 
         const nextTravelState = getTravelStateFromCurrentLocation(
@@ -54,14 +57,13 @@ export const currentLocationAtom = atom(
             set(travelStateAtom, nextTravelState);
         }
 
-        get(uuidAtom).then((uuid) => {
-            if (uuid) {
-                updateLocation({
-                    uuid,
-                    coordinate: newLocation,
-                    isAlert: nextTravelState === "on-road-alert",
-                });
-            }
-        });
+        const uuid = await get(uuidAtom);
+        if (uuid) {
+            updateLocation({
+                uuid,
+                coordinate: newLocation,
+                isAlert: nextTravelState === "on-road-alert",
+            });
+        }
     }
 );
