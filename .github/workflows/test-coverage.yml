@@ -25,7 +25,7 @@ jobs:
         run: pnpm install
 
       - name: Run tests and collect coverage
-        run: pnpx jest --coverage
+        run: pnpm jest --coverage
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4

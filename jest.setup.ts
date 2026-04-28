@@ -97,6 +97,7 @@ jest.mock("expo-constants", () => ({
 jest.mock("expo-font", () => ({
     useFonts: () => [true, null],
     loadAsync: jest.fn(),
+    isLoaded: jest.fn(() => true),
 }));
 
 // Mock expo-splash-screen
