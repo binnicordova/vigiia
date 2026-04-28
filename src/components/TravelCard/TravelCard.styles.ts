@@ -5,9 +5,9 @@ import {SPACING} from "@/theme/spacing";
 
 export const styles = StyleSheet.create({
     container: {
-        padding: SPACING[6],
-        borderRadius: RADIUS[5],
-        gap: SPACING[4],
+        padding: SPACING[4],
+        borderRadius: RADIUS[6],
+        gap: SPACING[2],
     },
     header: {
         flexDirection: "row",
@@ -24,10 +24,6 @@ export const styles = StyleSheet.create({
     titleGroup: {
         flex: 1,
         gap: SPACING[1],
-    },
-    title: {},
-    description: {
-        lineHeight: 20,
     },
     indicationContainer: {
         padding: SPACING[3],
@@ -63,6 +59,12 @@ export const styles = StyleSheet.create({
         borderRadius: RADIUS[4],
         gap: SPACING[1],
     },
-    statLabel: {},
-    statValue: {},
+    actionRow: {
+        flexDirection: "row",
+        gap: SPACING[4],
+        marginTop: SPACING[4],
+    },
+    actionButton: {
+        flex: 1,
+    },
 });

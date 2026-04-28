@@ -20,7 +20,7 @@ describe("Card Component", () => {
         );
         const card = getByTestId("card");
         expect(card.props.style).toContainEqual(
-            expect.objectContaining({elevation: 4})
+            expect.objectContaining({elevation: 5})
         );
     });
 });

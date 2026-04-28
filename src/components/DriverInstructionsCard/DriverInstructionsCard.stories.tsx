@@ -1,22 +1,20 @@
 import type {Meta, StoryObj} from "@storybook/react";
-import {Provider} from "jotai";
+import {type Atom, Provider} from "jotai";
 import {useHydrateAtoms} from "jotai/utils";
 import {View} from "react-native";
-import {
-    currentLocationAtom,
-    destainAtom,
-    routeStepsAtom,
-} from "@/stores/location";
+import {currentLocationAtom} from "@/stores/location";
+import {destainAtom, routeStepsAtom} from "@/stores/route";
 import {DriverInstructionsCard} from "./DriverInstructionsCard";
 
 const HydrateAtoms = ({
     atomValues,
     children,
 }: {
-    atomValues: any;
+    atomValues: Iterable<readonly [Atom<unknown>, unknown]>;
     children: React.ReactNode;
 }) => {
-    useHydrateAtoms(atomValues);
+    // biome-ignore lint/suspicious/noExplicitAny: hydration types are complex
+    useHydrateAtoms(atomValues as any);
     return children;
 };
 

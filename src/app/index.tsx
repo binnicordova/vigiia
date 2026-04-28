@@ -7,8 +7,8 @@ import {
     StyleSheet,
     View,
 } from "react-native";
-import {Circle, Marker, Polyline} from "react-native-maps";
 import type MapView from "react-native-maps";
+import {Marker, Polyline} from "react-native-maps";
 import {ActiveProtectionCard} from "@/components/ActiveProtectionCard/ActiveProtectionCard";
 import {CurrentMarker} from "@/components/CurrentMarker/CurrentMarker";
 import {DestinationCard} from "@/components/DestinationCard/DestinationCard";
@@ -16,24 +16,27 @@ import {DriverInstructionsCard} from "@/components/DriverInstructionsCard/Driver
 import {Icon} from "@/components/Icon/Icon";
 import {IconButton} from "@/components/IconButton/IconButton";
 import {Map as MapComponent} from "@/components/Map/Map";
+import {PinModal} from "@/components/PinModal/PinModal";
+import {Text} from "@/components/Text/Text";
 import {TravelCard} from "@/components/TravelCard/TravelCard";
+import {PHONE_NUMBER} from "@/constants/env";
 import {STRINGS} from "@/constants/strings";
+import {currentLocationAtom} from "@/stores/location";
 import {
     coordinatesAtom,
-    currentLocationAtom,
     destainAtom,
     fetchRouteAtom,
+    imSafe,
     originAtom,
     resetRouteAtom,
-} from "@/stores/location";
+    sendPanic,
+} from "@/stores/route";
 import {travelStateAtom} from "@/stores/travel";
 import {BORDER} from "@/theme/border";
 import {theme} from "@/theme/colors";
 import {SHADOW} from "@/theme/shadow";
 import {SPACING} from "@/theme/spacing";
-import {Text} from "@/components/Text/Text";
 import {call, whatsapp} from "@/utils/linking";
-import {PHONE_NUMBER} from "@/constants/env";
 import {calculateBearing, projectCoordinate} from "@/utils/locationChecker";
 
 const COLORS = theme();
@@ -49,21 +52,36 @@ export const DEFAULT_LOCATION = {
     longitudeDelta: 0.05,
 };
 
+const TAG = "[HOME SCREEN]";
+
 export default function Index() {
     const [_region, setRegion] = useState(DEFAULT_LOCATION);
     const mapRef = useRef<MapView>(null);
 
     const [travelState, setTravelState] = useAtom(travelStateAtom);
-    const [origin] = useAtom(originAtom);
+    const origin = useAtomValue(originAtom);
 
     const [destination, setDestination] = useAtom(destainAtom);
-    const [coordinates] = useAtom(coordinatesAtom);
+    const coordinates = useAtomValue(coordinatesAtom);
     const currentLocation = useAtomValue(currentLocationAtom);
 
     const fetchRoute = useSetAtom(fetchRouteAtom);
     const resetRoute = useSetAtom(resetRouteAtom);
 
     const [firstCameraMove, setFirstCameraMove] = useState(false);
+    const [pinModal, setPinModal] = useState<{
+        visible: boolean;
+        title: string;
+        description: string;
+        confirmText: string;
+        onConfirm: (pin: string) => void;
+    }>({
+        visible: false,
+        title: "",
+        description: "",
+        confirmText: "",
+        onConfirm: () => {},
+    });
 
     const moveToLocation = useCallback(
         (latitude: number, longitude: number) => {
@@ -114,11 +132,11 @@ export default function Index() {
     }, [coordinates, currentLocation, destination]);
 
     useEffect(() => {
-        if (destination && !firstCameraMove) {
-            moveToLocation(destination.latitude, destination.longitude);
+        if (travelState === "idle" && currentLocation && !firstCameraMove) {
+            moveToLocation(currentLocation.latitude, currentLocation.longitude);
             setFirstCameraMove(true);
         }
-    }, [destination, moveToLocation, firstCameraMove]);
+    }, [travelState, currentLocation, moveToLocation, firstCameraMove]);
 
     useEffect(() => {
         if (!currentLocation || travelState === "idle") {
@@ -179,45 +197,138 @@ export default function Index() {
     };
 
     const onDestinationPress = async () => {
-        try {
-            await fetchRoute();
-            setTravelState("on-road");
-        } catch {
-            Alert.alert(
-                "Error",
-                "No se pudo obtener la ruta. ¿Deseas intentarlo de nuevo?",
-                [
-                    {text: "Cancelar", style: "cancel"},
-                    {text: "Reintentar", onPress: onDestinationPress},
-                ]
-            );
-        }
+        console.log(TAG, "Destination press initiated");
+        setPinModal({
+            visible: true,
+            title: "Crear PIN de Seguridad",
+            description:
+                "Define un PIN único para este viaje. Lo necesitarás para confirmar que estás seguro y para finalizar el viaje.",
+            confirmText: "Iniciar Viaje",
+            onConfirm: async (pin: string) => {
+                if (!pin || pin.toString().trim() === "") {
+                    Alert.alert(
+                        "PIN Requerido",
+                        "Por favor ingresa un PIN para continuar"
+                    );
+                    return;
+                }
+                if (pin && pin.toString().length < 4) {
+                    Alert.alert(
+                        "PIN Inválido",
+                        "El PIN debe tener al menos 4 dígitos"
+                    );
+                    return;
+                }
+
+                try {
+                    await fetchRoute(pin);
+                    setTravelState("on-road");
+                    setPinModal((prev) => ({...prev, visible: false}));
+                } catch (e) {
+                    console.error(TAG, "Error fetching route:", e);
+                    Alert.alert(
+                        "Error",
+                        "No se pudo obtener la ruta. ¿Deseas intentarlo de nuevo?",
+                        [
+                            {text: "Cancelar", style: "cancel"},
+                            {text: "Reintentar", onPress: onDestinationPress},
+                        ]
+                    );
+                }
+            },
+        });
     };
 
     const onCancelPress = () => {
-        Alert.alert(
-            "Cancelar Viaje",
-            "¿Estás seguro de que deseas cancelar el viaje? Se detendrá el monitoreo de tu ubicación, y perderás la protección en tiempo real.",
-            [
-                {text: "No", style: "cancel"},
-                {
-                    text: "Sí, Cancelar",
-                    style: "destructive",
-                    onPress: () => {
-                        resetRoute();
-                        setTravelState("idle");
-                    },
-                },
-            ]
-        );
+        setPinModal({
+            visible: true,
+            title: "Cancelar Viaje",
+            description:
+                "¿Estás seguro de que deseas cancelar el viaje? Se detendrá el monitoreo de tu ubicación, y perderás la protección en tiempo real.",
+            confirmText: "Sí, Cancelar",
+            onConfirm: async (pin: string) => {
+                if (!pin || pin.toString().trim() === "") {
+                    Alert.alert(
+                        "PIN Requerido",
+                        "Por favor ingresa el PIN para confirmar la cancelación"
+                    );
+                    return;
+                }
+                try {
+                    await resetRoute(pin);
+                    setTravelState("idle");
+                    setPinModal((prev) => ({...prev, visible: false}));
+                } catch (e) {
+                    console.error(TAG, "Error resetting route:", e);
+                    Alert.alert("Error", "No se pudo cancelar el viaje.");
+                }
+            },
+        });
+    };
+
+    const onSafePress = () => {
+        setPinModal({
+            visible: true,
+            title: "Estoy Seguro",
+            description:
+                "Hemos enfocado nuestra atención en tu viaje debido a una posible situación de riesgo. Si estás seguro y deseas indicar que todo está bien, por favor confirma a continuación.",
+            confirmText: "Sí, Estoy Seguro",
+            onConfirm: async (pin: string) => {
+                if (!pin || pin.toString().trim() === "") {
+                    Alert.alert(
+                        "PIN Requerido",
+                        "Por favor ingresa el PIN para confirmar que estás seguro"
+                    );
+                    return;
+                }
+                try {
+                    await imSafe(pin);
+                    setPinModal((prev) => ({...prev, visible: false}));
+                    Alert.alert(
+                        "Confirmado",
+                        "Gracias por confirmar que estás seguro. El monitoreo continúa normalmente."
+                    );
+                } catch (e) {
+                    console.error(TAG, "Error in imSafe:", e);
+                    Alert.alert(
+                        "Error",
+                        "PIN inválido o error de conexión. Por favor intenta de nuevo."
+                    );
+                }
+            },
+        });
     };
 
     const onFinishPress = () => {
-        setTravelState("idle");
+        setPinModal({
+            visible: true,
+            title: "Finalizar Viaje",
+            description:
+                "¿Deseas finalizar el viaje? Asegúrate de haber llegado a tu destino y estar seguro antes de confirmar.",
+            confirmText: "Sí, Finalizar",
+            onConfirm: async (pin: string) => {
+                if (!pin || pin.toString().trim() === "") {
+                    Alert.alert(
+                        "PIN Requerido",
+                        "Por favor ingresa el PIN para confirmar que deseas finalizar el viaje"
+                    );
+                    return;
+                }
+                try {
+                    await resetRoute(pin);
+                    setTravelState("idle");
+                    setPinModal((prev) => ({...prev, visible: false}));
+                } catch (e) {
+                    console.error(TAG, "Error finishing route:", e);
+                    Alert.alert("Error", "No se pudo finalizar el viaje.");
+                }
+            },
+        });
     };
 
     const handleRegionChange = (newRegion: typeof DEFAULT_LOCATION) => {
         setRegion(newRegion);
+        // console.log("Region changed to:", newRegion, "Current travel state:", travelState);
         if (travelState === "idle") {
             setDestination({
                 latitude: newRegion.latitude,
@@ -242,19 +353,7 @@ export default function Index() {
                 pitchEnabled
                 showsBuildings
             >
-                {!currentLocation && (
-                    <View
-                        style={{
-                            ...StyleSheet.absoluteFillObject,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            backgroundColor: "rgba(255, 255, 255, 0.8)",
-                        }}
-                    >
-                        <Text>Cargando ubicación...</Text>
-                    </View>
-                )}
-                {currentLocation && (
+                {currentLocation && travelState !== "idle" && (
                     <CurrentMarker currentLocation={currentLocation} />
                 )}
 
@@ -301,6 +400,19 @@ export default function Index() {
                     )}
             </MapComponent>
 
+            {!currentLocation && (
+                <View
+                    style={{
+                        ...StyleSheet.absoluteFillObject,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "rgba(255, 255, 255, 0.8)",
+                    }}
+                >
+                    <Text>Cargando ubicación...</Text>
+                </View>
+            )}
+
             {travelState === "idle" && (
                 <IconButton
                     name="menu"
@@ -314,7 +426,11 @@ export default function Index() {
                 style={styles.overlay}
                 pointerEvents="box-none"
             >
-                {travelState === "on-road" && <DriverInstructionsCard />}
+                {["on-road", "on-road-alert"].includes(travelState) && (
+                    <DriverInstructionsCard
+                        alert={travelState === "on-road-alert"}
+                    />
+                )}
 
                 <View style={styles.spacer} pointerEvents="none" />
 
@@ -346,11 +462,24 @@ export default function Index() {
 
                 {travelState === "on-road-alert" && (
                     <ActiveProtectionCard
-                        onPanicPress={() => console.log("Panic!")}
+                        onSafePress={onSafePress}
+                        onPanicPress={sendPanic}
                         onCallPress={() => call(PHONE_NUMBER)}
                     />
                 )}
             </KeyboardAvoidingView>
+
+            <PinModal
+                visible={pinModal.visible}
+                title={pinModal.title}
+                description={pinModal.description}
+                confirmText={pinModal.confirmText}
+                cancelText="Cancelar"
+                onConfirm={pinModal.onConfirm}
+                onCancel={() =>
+                    setPinModal((prev) => ({...prev, visible: false}))
+                }
+            />
         </View>
     );
 }
@@ -385,20 +514,19 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
     },
     startMarker: {
-        width: SPACING[4],
-        height: SPACING[4],
-        borderRadius: SPACING[2],
-        backgroundColor: COLORS.background,
+        width: SPACING[8],
+        height: SPACING[8],
+        borderRadius: SPACING[4],
         borderWidth: BORDER[1],
-        borderColor: COLORS.text,
+        borderColor: COLORS.accent,
         alignItems: "center",
         justifyContent: "center",
     },
     startMarkerInner: {
-        width: SPACING[2],
-        height: SPACING[2],
-        borderRadius: SPACING[1],
-        backgroundColor: COLORS.text,
+        width: SPACING[4],
+        height: SPACING[4],
+        borderRadius: SPACING[2],
+        backgroundColor: COLORS.accent,
     },
     truckMarker: {
         width: 32,

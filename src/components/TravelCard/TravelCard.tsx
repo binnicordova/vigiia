@@ -1,5 +1,5 @@
-import {Alert, View} from "react-native";
 import {useAtomValue} from "jotai";
+import {View} from "react-native";
 import {STRINGS} from "@/constants/strings";
 import {
     destainAtom,
@@ -7,14 +7,15 @@ import {
     formattedDurationAtom,
     isNearDestainAtom,
     isNearOriginAtom,
-} from "@/stores/location";
+} from "@/stores/route";
 import {theme} from "@/theme/colors";
 import {FONT_SIZE} from "@/theme/fonts";
+import {SPACING} from "@/theme/spacing";
+import {Button} from "../Button/Button";
 import {Card} from "../Card/Card";
 import {Icon} from "../Icon/Icon";
 import {Text} from "../Text/Text";
 import {styles} from "./TravelCard.styles";
-import {Button} from "../Button/Button";
 
 export type TravelCardProps = {
     testID?: string;
@@ -36,14 +37,17 @@ export const TravelCard = ({
     const distance = useAtomValue(formattedDistanceAtom);
     const eta = useAtomValue(formattedDurationAtom);
 
-    const address = destain.name ?? "";
+    const address = destain?.name ?? "";
+
+    const cardStyles = [
+        styles.container,
+        {backgroundColor: background},
+        isOnDestain && {borderColor: accent, borderWeight: 2},
+    ];
 
     return (
-        <Card
-            style={[styles.container, {backgroundColor: background}]}
-            testID={testID}
-        >
-            {!isOnOrigin && (
+        <Card style={cardStyles} testID={testID}>
+            {!isOnOrigin && !isOnDestain && (
                 <View style={styles.header}>
                     <View
                         style={[
@@ -58,22 +62,17 @@ export const TravelCard = ({
                         />
                     </View>
                     <View style={styles.titleGroup}>
-                        <Text type="heading" style={styles.title}>
-                            {STRINGS.travel_card.title}
-                        </Text>
-                        <Text type="default" style={styles.description}>
+                        <Text type="heading">{STRINGS.travel_card.title}</Text>
+                        <Text type="default">
                             {STRINGS.travel_card.description}
                         </Text>
                     </View>
                 </View>
             )}
-            {isOnOrigin && (
+            {isOnOrigin && !isOnDestain && (
                 <>
                     <View>
-                        <Text
-                            type="label"
-                            style={[styles.statLabel, {color: accent}]}
-                        >
+                        <Text type="label" style={{color: accent}}>
                             {STRINGS.travel_card.destination_label}
                         </Text>
                         <Text
@@ -91,16 +90,10 @@ export const TravelCard = ({
                                 {backgroundColor: lightness},
                             ]}
                         >
-                            <Text
-                                type="label"
-                                style={[styles.statLabel, {color: accent}]}
-                            >
+                            <Text type="label" style={{color: accent}}>
                                 {STRINGS.travel_card.eta_label}
                             </Text>
-                            <Text
-                                type="subtitle"
-                                style={[styles.statValue, {color: accent}]}
-                            >
+                            <Text type="subtitle" style={{color: accent}}>
                                 {eta}
                             </Text>
                         </View>
@@ -110,16 +103,10 @@ export const TravelCard = ({
                                 {backgroundColor: lightness},
                             ]}
                         >
-                            <Text
-                                type="label"
-                                style={[styles.statLabel, {color: accent}]}
-                            >
+                            <Text type="label" style={{color: accent}}>
                                 {STRINGS.travel_card.distance_label}
                             </Text>
-                            <Text
-                                type="subtitle"
-                                style={[styles.statValue, {color: accent}]}
-                            >
+                            <Text type="subtitle" style={{color: accent}}>
                                 {distance}
                             </Text>
                         </View>
@@ -133,11 +120,35 @@ export const TravelCard = ({
                 </>
             )}
             {isOnDestain && (
-                <Button
-                    title={STRINGS.travel_card.finish_button}
-                    onPress={onFinishPress}
-                    testID={`${testID}-button`}
-                />
+                <View style={{gap: SPACING[4]}}>
+                    <View style={styles.header}>
+                        <View
+                            style={[
+                                styles.iconContainer,
+                                {backgroundColor: lightness},
+                            ]}
+                        >
+                            <Icon
+                                name="check-circle"
+                                color={accent}
+                                size={FONT_SIZE[8]}
+                            />
+                        </View>
+                        <View style={styles.titleGroup}>
+                            <Text type="heading">
+                                {STRINGS.travel_card.arrival_title}
+                            </Text>
+                            <Text type="default">
+                                {STRINGS.travel_card.arrival_description}
+                            </Text>
+                        </View>
+                    </View>
+                    <Button
+                        title={STRINGS.travel_card.finish_button}
+                        onPress={onFinishPress}
+                        testID={`${testID}-button`}
+                    />
+                </View>
             )}
         </Card>
     );

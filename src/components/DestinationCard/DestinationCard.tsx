@@ -1,6 +1,6 @@
-import {useEffect, useState, Fragment, useRef} from "react";
 import {useAtomValue, useSetAtom} from "jotai";
-import {TouchableOpacity, View, type ViewProps, Keyboard} from "react-native";
+import {Fragment, useEffect, useRef, useState} from "react";
+import {Keyboard, TouchableOpacity, View, type ViewProps} from "react-native";
 import {Button} from "@/components/Button/Button";
 import {Divider} from "@/components/Divider/Divider";
 import {Icon} from "@/components/Icon/Icon";
@@ -11,11 +11,12 @@ import {Text} from "@/components/Text/Text";
 import {STRINGS} from "@/constants/strings";
 import {useDebounce} from "@/hooks/useDebounce";
 import {
-    searchAddresses,
     type AddressSuggestion,
     getLocationDetail,
+    searchAddresses,
 } from "@/services/address";
-import {destainAtom, originAtom, type Coordinate} from "@/stores/location";
+import type {Coordinate} from "@/stores/location";
+import {destainAtom, originAtom} from "@/stores/route";
 import {RADIUS} from "@/theme/border";
 import {theme} from "@/theme/colors";
 import {SPACING} from "@/theme/spacing";
@@ -32,7 +33,7 @@ export const DestinationCard = ({
     style,
     ...props
 }: DestinationCardProps) => {
-    const {background, text, accent} = theme();
+    const {background, text} = theme();
     const setDestain = useSetAtom(destainAtom);
     const destain = useAtomValue(destainAtom);
     const origin = useAtomValue(originAtom);
@@ -52,8 +53,9 @@ export const DestinationCard = ({
         }
 
         const fetchDetails = async () => {
-            if (!debouncedDestain)
-                throw new Error("No destination coordinate provided");
+            if (!debouncedDestain) {
+                return;
+            }
             try {
                 const label = await getLocationDetail(debouncedDestain);
                 if (label && label !== query) {

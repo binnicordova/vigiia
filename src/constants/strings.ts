@@ -36,7 +36,7 @@ export const STRINGS = {
     active_protection: {
         title: "ESTÁS SIENDO RESGUARDADO",
         description:
-            "Nuestro equipo de seguridad está rastreando tu posición en tiempo real.",
+            "Nuestro equipo de seguridad está observando tu posición en tiempo real para validar tu seguridad.",
         safe_button: "ESTOY SEGURO",
         call_central_button: "Llamar Central",
         panic_button: "Pánico",
@@ -53,6 +53,9 @@ export const STRINGS = {
         distance_label: "DISTANCIA",
         cancel_button: "Cancelar Viaje",
         finish_button: "Finalizar Viaje",
+        arrival_title: "Has llegado",
+        arrival_description:
+            "¿Te encuentras en un lugar seguro? Finaliza tu viaje para detener el monitoreo.",
     },
     units: {
         meters: "m",

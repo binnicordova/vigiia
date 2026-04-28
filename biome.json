@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
     "vcs": {
         "enabled": false,
         "clientKind": "git",
@@ -14,7 +14,9 @@
             "!**/build",
             "!**/coverage",
             "!**/.rnstorybook/storybook.requires.ts",
-            "!**/.expo"
+            "!**/.expo",
+            "!**/functions/lib",
+            "!**/public/index.html"
         ]
     },
     "formatter": {
@@ -31,6 +33,9 @@
         "enabled": true,
         "rules": {
             "recommended": true,
+            "suspicious": {
+                "noShadowRestrictedNames": "off"
+            },
             "style": {
                 "noParameterAssign": "error",
                 "useAsConstAssertion": "error",

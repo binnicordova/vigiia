@@ -1,0 +1,222 @@
+[
+    {
+        "name": "Transporte Rey del Sur",
+        "type": "Transport & Cargo",
+        "location": "Arequipa, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Arequipa",
+        "phones": ["+51 973 214 556"],
+        "email": ""
+    },
+    {
+        "name": "Transportes Carga Total SAC",
+        "type": "Cargo Transport",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["+51 999 584 112"],
+        "email": ""
+    },
+    {
+        "name": "Transportes El Diamante",
+        "type": "Freight Transport",
+        "location": "Callao, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Callao",
+        "phones": ["+51 958 347 900"],
+        "email": ""
+    },
+    {
+        "name": "Transporte & Carga Express SAC",
+        "type": "Cargo & Delivery",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["+51 982 210 334"],
+        "email": ""
+    },
+    {
+        "name": "Logística Peruana SAC",
+        "type": "Freight & Logistics",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["+51 944 338 420"],
+        "email": ""
+    },
+    {
+        "name": "Transportes BKM SAC",
+        "type": "Cargo Transport",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["+51 990 551 776"],
+        "email": ""
+    },
+    {
+        "name": "Mundo Transporte SAC",
+        "type": "Transport Service",
+        "location": "Cusco, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Cusco",
+        "phones": ["+51 984 123 987"],
+        "email": ""
+    },
+    {
+        "name": "Transporte Rutas Andinas",
+        "type": "Passenger & Cargo",
+        "location": "Cusco, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Cusco",
+        "phones": ["+51 987 655 211"],
+        "email": ""
+    },
+    {
+        "name": "Transportes Faru SAC",
+        "type": "Transport & Logistics",
+        "location": "Piura, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Piura",
+        "phones": ["+51 970 987 665"],
+        "email": ""
+    },
+    {
+        "name": "Transportes La Libertad S.A.C.",
+        "type": "Cargo Transport",
+        "location": "Trujillo, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Trujillo",
+        "phones": ["+51 947 210 122"],
+        "email": ""
+    },
+    {
+        "name": "Transportes El Cóndor SAC",
+        "type": "Cargo & Passenger",
+        "location": "Arequipa, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Arequipa",
+        "phones": ["+51 986 432 211"],
+        "email": ""
+    },
+    {
+        "name": "Transporte Los Politos",
+        "type": "Cargo Transport",
+        "location": "Chiclayo, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Chiclayo",
+        "phones": ["+51 974 889 332"],
+        "email": ""
+    },
+    {
+        "name": "Transportes Elite Cargo SAC",
+        "type": "Freight & Delivery",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["+51 933 774 556"],
+        "email": ""
+    },
+    {
+        "name": "Logística Integral Norte SAC",
+        "type": "Logistics & Transport",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["+51 921 887 345"],
+        "email": ""
+    },
+    {
+        "name": "Transporte San Martín SAC",
+        "type": "Passenger & Cargo",
+        "location": "Tarapoto, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Tarapoto",
+        "phones": ["+51 943 221 450"],
+        "email": ""
+    },
+    {
+        "name": "Transporte Logistics Perú",
+        "type": "Cargo Transport",
+        "location": "Iquitos, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Iquitos",
+        "phones": ["+51 949 133 290"],
+        "email": ""
+    },
+    {
+        "name": "Transporte Amazonas Cargo",
+        "type": "Freight Service",
+        "location": "Puerto Maldonado, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Puerto Maldonado",
+        "phones": ["+51 957 004 556"],
+        "email": ""
+    },
+    {
+        "name": "Delivery Perú Express",
+        "type": "Courier & Delivery",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["+51 991 222 333"],
+        "email": ""
+    },
+    {
+        "name": "Speed Cargo Perú",
+        "type": "Cargo Transport",
+        "location": "Arequipa, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Arequipa",
+        "phones": ["+51 978 411 222"],
+        "email": ""
+    },
+    {
+        "name": "Express Logistics SAC",
+        "type": "Logistics & Transport",
+        "location": "Lima, Peru",
+        "latitude": "",
+        "longitude": "",
+        "address": "",
+        "city": "Lima",
+        "phones": ["+51 916 300 741"],
+        "email": ""
+    }
+]

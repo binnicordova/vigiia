@@ -1,4 +1,6 @@
-export const FONT_SIZE = [0, 8, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48];
+export const FONT_SIZE = [
+    0, 8, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 56, 64, 72, 80, 96, 128,
+];
 
 export const FONT_FAMILY = {
     LATO_LIGHT: "LatoLight",

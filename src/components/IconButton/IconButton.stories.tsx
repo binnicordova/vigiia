@@ -1,8 +1,8 @@
 import {action} from "@storybook/addon-actions";
 import type {Meta, StoryObj} from "@storybook/react";
 import {theme} from "@/theme/colors";
-import {IconButton} from "./IconButton";
 import {FONT_SIZE} from "@/theme/fonts";
+import {IconButton} from "./IconButton";
 
 const COLORS = theme();
 

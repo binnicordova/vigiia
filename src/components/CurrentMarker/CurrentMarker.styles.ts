@@ -1,5 +1,5 @@
-import {SHADOW} from "@/theme/shadow";
 import {StyleSheet} from "react-native";
+import {SHADOW} from "@/theme/shadow";
 
 export const styles = StyleSheet.create({
     arrowContainer: {

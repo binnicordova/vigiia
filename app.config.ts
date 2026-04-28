@@ -1,12 +1,11 @@
 import "dotenv/config";
 import type {ExpoConfig} from "@expo/config-types";
 
-const EAS_OWNER = process.env.EAS_OWNER; // by https://www.binnicordova.com
+const EAS_OWNER = process.env.EAS_OWNER;
 const EAS_SLUG = "vigiia";
 const EAS_PROJECT_ID = process.env.EAS_PROJECT_ID;
 
-const VERSION = "0.0.1";
-const VERSION_CODE = 1;
+const VERSION = "0.0.3";
 
 const APP_VARIANTS = {
     development: {
@@ -94,7 +93,7 @@ export default ({config}: {config: ExpoConfig}): ExpoConfig => ({
         },
     },
     owner: EAS_OWNER,
-    runtimeVersion: `${VERSION}+${VERSION_CODE}`,
+    runtimeVersion: VERSION,
     userInterfaceStyle: "automatic",
     plugins: [
         [

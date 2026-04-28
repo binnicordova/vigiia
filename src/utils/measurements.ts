@@ -1,5 +1,5 @@
-import {STRINGS} from "@/constants/strings";
 import {METRICS} from "@/constants/metrics";
+import {STRINGS} from "@/constants/strings";
 
 export const formatDistance = (meters: number): string => {
     if (meters < METRICS.distance.threshold_km) {

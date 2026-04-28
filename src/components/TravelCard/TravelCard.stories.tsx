@@ -6,9 +6,7 @@ import {TravelCard} from "./TravelCard";
 const meta = {
     title: "Components/TravelCard",
     component: TravelCard,
-    args: {
-        isOnOrigin: true,
-    },
+    args: {},
     decorators: [
         (Story) => (
             <View
@@ -30,13 +28,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const OnOrigin: Story = {
-    args: {
-        isOnOrigin: true,
-    },
+    args: {},
 };
 
 export const OnRoad: Story = {
-    args: {
-        isOnOrigin: false,
-    },
+    args: {},
 };

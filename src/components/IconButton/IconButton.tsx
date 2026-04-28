@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import {
     type GestureResponderEvent,
     TouchableOpacity,
@@ -6,9 +6,9 @@ import {
 } from "react-native";
 import {theme} from "@/theme/colors";
 import {FONT_SIZE} from "@/theme/fonts";
+import {OPACITY} from "@/theme/opcacity";
 import {Icon, type IconProps} from "../Icon/Icon";
 import {styles} from "./IconButton.styles";
-import {OPACITY} from "@/theme/opcacity";
 
 const COLORS = theme();
 
@@ -17,6 +17,7 @@ export interface IconButtonProps extends Omit<IconProps, "style"> {
     style?: ViewStyle;
     backgroundColor?: string;
     shadow?: boolean;
+    testID?: string;
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -27,6 +28,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
     style: containerStyle,
     backgroundColor = COLORS.background,
     shadow = true,
+    testID,
     ...iconProps
 }) => {
     return (
@@ -39,6 +41,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
             ]}
             onPress={onPress}
             activeOpacity={OPACITY[3]}
+            testID={testID}
         >
             <Icon name={name} size={size} color={color} {...iconProps} />
         </TouchableOpacity>
